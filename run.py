@@ -1,3 +1,5 @@
+from random import randint
+
 board = []
 board_length = 6
 
@@ -13,10 +15,12 @@ def print_game_board(board):
 
 # Function to get a random location for a ship
 def rand_row(board):
-    return randint(1, board_length)
+    return randint(0, board_length-1)
 
 def rand_col(board):
-    return randint(1, board_length)
+    return randint(0, board_length-1)
+
+ship1_pos = [rand_row(board), rand_col(board)]
 
 
 
@@ -25,3 +29,4 @@ print('Welcome to Python battleships')
 
 make_game_board()
 print_game_board(board)
+print(ship1_pos)
