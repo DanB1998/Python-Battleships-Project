@@ -33,14 +33,44 @@ def run_game():
     """
     Function that will run the game
     """
+    print_game_board(board)
+    guess()
 
-def validate_user_input():
+def guess():
+    row = 0
+    col = 0
+    
+    print("Please guess a row and a column")
+    
+    user_guess = input("Guess coordinates here: ")
+
+    guess = user_guess.split(",")
+
+    if validate_user_input(guess):
+        print(f"You guessed {guess}")
+
+    
+# Input validation
+def validate_user_input(coordinates):
     """
-    A function that will validate the users input
+    A function that will validate the users input as 2 numbers representing a coordinate
     """
+    try:
+        [int(coord) for coord in coordinates]
+        if len(coordinates) != 2:
+            raise ValueError(
+                f"Only 2 coordinates required, you provided {len(coordinates)}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
 
-# Testing area
 
-print("Welcome to Python Battleships")
-make_game_board(board)
+def check_for_hit():
 
+def main():
+    print("Welcome to Python Battleships")
+    make_game_board(board)
+    run_game()
+
+
+main()
