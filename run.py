@@ -1,19 +1,27 @@
 board = []
+board_length = 6
 
-for x in range(8):
-        board.append(' _ ' * 8)
+# Creating a game board
+def make_game_board():
+    for x in range(board_length):
+        board.append(' O ' * board_length)
 
+# Showing the game board
 def print_game_board(board):
-    print(" 1  2  3  4  5  6  7  8")
     for x in board:
         print(x)
 
-def main():
-    """
-    Run the program
-    """
-    print_game_board(board)
-    
+# Function to get a random location for a ship
+def rand_row(board):
+    return randint(1, board_length)
 
+def rand_col(board):
+    return randint(1, board_length)
+
+
+
+# Functions for use later
 print('Welcome to Python battleships')
-main()
+
+make_game_board()
+print_game_board(board)
