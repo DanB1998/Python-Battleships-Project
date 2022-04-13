@@ -2,6 +2,9 @@ from random import randint
 
 board = []
 board_length = 6
+number_of_ships = 3
+hits = 0
+turns = 0
 
 # Creating a game board
 def make_game_board():
@@ -10,8 +13,7 @@ def make_game_board():
 
 # Showing the game board
 def print_game_board(board):
-    for x in board:
-        print(x)
+    print(board)
 
 # Function to get a random location for a ship
 def rand_row(board):
@@ -22,11 +24,18 @@ def rand_col(board):
 
 ship1_pos = [rand_row(board), rand_col(board)]
 
-
+#Logic ideas
+while hits < number_of_ships:
+    row = 0
+    col = 0
+    print('Welcome to Python battleships, here is your board')
+    print_game_board(board)
+    print('Please choose a coordinate to attack!')
+    row = int(input('Choose a row: '))
+    col = int(input('Choose a column: '))
 
 # Functions for use later
-print('Welcome to Python battleships')
+def main():
+    make_game_board()
 
-make_game_board()
-print_game_board(board)
-print(ship1_pos)
+main()
