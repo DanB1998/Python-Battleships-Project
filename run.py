@@ -6,14 +6,17 @@ number_of_ships = 3
 hits = 0
 turns = 0
 
-# Creating a game board
-def make_game_board():
+
+
+# Making the game board
+def make_game_board(board):
     for x in range(board_length):
         board.append(' O ' * board_length)
 
 # Showing the game board
 def print_game_board(board):
-    print(board)
+    for x in board:
+        print(x)
 
 # Function to get a random location for a ship
 def rand_row(board):
@@ -24,18 +27,20 @@ def rand_col(board):
 
 ship1_pos = [rand_row(board), rand_col(board)]
 
-#Logic ideas
-while hits < number_of_ships:
-    row = 0
-    col = 0
-    print('Welcome to Python battleships, here is your board')
-    print_game_board(board)
-    print('Please choose a coordinate to attack!')
-    row = int(input('Choose a row: '))
-    col = int(input('Choose a column: '))
+# Game Logic
 
-# Functions for use later
-def main():
-    make_game_board()
+def run_game():
+    """
+    Function that will run the game
+    """
 
-main()
+def validate_user_input():
+    """
+    A function that will validate the users input
+    """
+
+# Testing area
+
+print("Welcome to Python Battleships")
+make_game_board(board)
+
