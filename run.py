@@ -35,6 +35,7 @@ def run_game():
     print_game_board(board)
     guess()
 
+# User guess
 def guess():
     print("Please guess a row and a column")
     user_guess = input("Guess coordinates here: ")
@@ -47,7 +48,7 @@ def guess():
 # Input validation
 def validate_user_input(coordinates):
     """
-    A function that will validate the users 
+    A function that will validate the user's
     input as 2 numbers representing a coordinate
     """
     try:
@@ -61,11 +62,12 @@ def validate_user_input(coordinates):
 
     return coordinates
 
-
+# Main functions
 def main():
     print("Welcome to Python Battleships")
     make_game_board(board)
     run_game()
 
 
+# Calling main function
 main()
