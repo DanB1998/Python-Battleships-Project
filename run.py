@@ -37,6 +37,7 @@ def run_game():
     guess()
 
 def guess():
+    
     row = 0
     col = 0
     
@@ -64,8 +65,8 @@ def validate_user_input(coordinates):
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
 
+    return coordinates
 
-def check_for_hit():
 
 def main():
     print("Welcome to Python Battleships")
