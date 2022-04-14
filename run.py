@@ -28,7 +28,6 @@ def rand_col(board):
 ship1_pos = [rand_row(board), rand_col(board)]
 
 # Game Logic
-
 def run_game():
     """
     Function that will run the game
@@ -37,30 +36,25 @@ def run_game():
     guess()
 
 def guess():
-    
-    row = 0
-    col = 0
-    
     print("Please guess a row and a column")
-    
     user_guess = input("Guess coordinates here: ")
 
-    guess = user_guess.split(",")
+    guess_coord = user_guess.split(",")
 
-    if validate_user_input(guess):
-        print(f"You guessed {guess}")
+    if validate_user_input(guess_coord):
+        print(f"You guessed {guess_coord}")
 
-    
 # Input validation
 def validate_user_input(coordinates):
     """
-    A function that will validate the users input as 2 numbers representing a coordinate
+    A function that will validate the users 
+    input as 2 numbers representing a coordinate
     """
     try:
         [int(coord) for coord in coordinates]
         if len(coordinates) != 2:
             raise ValueError(
-                f"Only 2 coordinates required, you provided {len(coordinates)}"
+                f"Only 2 values for one coordinates required, you gave {len(coordinates)}"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
