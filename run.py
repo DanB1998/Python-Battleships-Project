@@ -33,13 +33,18 @@ def run_game():
 
 # User guess
 def guess():
+    """
+    Takes a guess from a user 
+    and passes it to the validator
+    """
     print("Please guess a row and a column")
     user_guess = input("Guess coordinates here: ")
 
     guess_coord = user_guess.split(",")
 
     if validate_user_input(guess_coord):
-        print(f"You guessed {guess_coord}"
+        print(f"You guessed {guess_coord}")
+        check_for_hit()
 
 # Input validation
 def validate_user_input(coordinates):
@@ -58,15 +63,18 @@ def validate_user_input(coordinates):
 
     return coordinates
 
-# def check_for_hit():
-
-def plant_ships():
+def check_for_hit():
+    # if (ship1_pos = user_guess):
     ship1_pos = [rand_row(board), rand_col(board)]
+    print(ship1_pos)
 
+# def plant_ships():
+    
 # Main functions
 def main():
     print("Welcome to Python Battleships")
     make_game_board(board)
+    #plant_ships()
     run_game()
 
 
