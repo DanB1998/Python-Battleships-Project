@@ -6,8 +6,6 @@ number_of_ships = 3
 hits = 0
 turns = 0
 
-
-
 # Making the game board
 def make_game_board(board):
     for x in range(board_length):
@@ -25,8 +23,6 @@ def rand_row(board):
 def rand_col(board):
     return randint(0, board_length-1)
 
-ship1_pos = [rand_row(board), rand_col(board)]
-
 # Game Logic
 def run_game():
     """
@@ -43,7 +39,7 @@ def guess():
     guess_coord = user_guess.split(",")
 
     if validate_user_input(guess_coord):
-        print(f"You guessed {guess_coord}")
+        print(f"You guessed {guess_coord}"
 
 # Input validation
 def validate_user_input(coordinates):
@@ -61,6 +57,11 @@ def validate_user_input(coordinates):
         print(f"Invalid data: {e}, please try again.\n")
 
     return coordinates
+
+# def check_for_hit():
+
+def plant_ships():
+    ship1_pos = [rand_row(board), rand_col(board)]
 
 # Main functions
 def main():
