@@ -12,15 +12,15 @@ def make_game_board(board):
     Making the game board
     """
     for x in range(board_length):
-        board.append(' O ' * board_length)
+        board.append('O ' * board_length)
 
 
 def print_game_board():
     """
     Showing the game board
     """
-    for x in board:
-        print(x)
+    for row in board:
+        print("".join(row))
 
 
 def rand_row(board):
@@ -50,6 +50,8 @@ def run_game():
     """
     Function that will run the game
     """
+    make_game_board(board)
+    plant_ships(board)
     print_game_board()
     guess()
 
@@ -64,8 +66,15 @@ def guess():
     global user_entry_row
     global user_entry_col
 
-    user_entry_row = input("Guess row: ")
-    user_entry_col = input("Guess column: ")
+    while True:
+        try:
+            user_entry_row = int(input("Guess row: "))
+            user_entry_col = int(input("Guess column: "))
+        except ValueError:
+            print("Please enter a number")
+            continue
+        else:
+            break
 
     if (validate_input(user_entry_row) and validate_input(user_entry_col)):
         print(f"You guessed {[user_entry_row, user_entry_col]}")
@@ -80,18 +89,14 @@ def validate_input(coordinates):
     input numbers representing a coordinate
     """
     try:
-        if(int(coordinates) > board_length-1):
+        if coordinates > board_length-1:
             raise ValueError(
                 f"You missed the Ocean, the max size is {board_length}"
-            )
-        elif len(coordinates) != 1:
-            raise ValueError(
-                f"Only 2 values needed, you gave {len(coordinates)}"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
-
+        
     return True
 
 
@@ -99,10 +104,23 @@ def check_for_hit():
     """
     Checks for hits when data is validated
     """
-    if (ship1_pos[1] == int(user_entry_col) and ship1_pos[0] == int(user_entry_row)):
-        print("You hit my battleship")
+    if (ship1_pos[1] == user_entry_col and ship1_pos[0] == user_entry_row):
+        print("You hit a battleship")
+        update_hit = board[user_entry_col].split()
+        update_hit[user_entry_row] = "#"
+        updated_row = " ".join(update_hit)
+        board[user_entry_col] = updated_row
+        print_game_board()
+        
+
     else:
-        print("You missed my battleship")  
+        print("You missed my battleship")
+
+
+def update_board():
+    """
+    Will update the board with a hit
+    """
 
 
 def main():
@@ -110,8 +128,6 @@ def main():
     Main functions
     """
     print("Welcome to Python Battleships")
-    make_game_board(board)
-    plant_ships(board)
     run_game()
 
 
