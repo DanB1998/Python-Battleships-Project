@@ -3,9 +3,8 @@ from random import randint
 player_board = []
 computer_board = []
 board_length = 4
-number_of_ships = 1
+number_of_ships = 3
 hits = 0
-turns = 0
 
 
 def make_game_board(board):
@@ -28,16 +27,46 @@ def plant_ships_player():
     """
     Plants the ships for the computers board
     """
-    global player_ship1_pos
-    player_ship1_pos = [randint(0, board_length), randint(0, board_length)]
+    global ps1_pos, ps2_pos, ps3_pos, player_positions
+    ps1_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+    ps2_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+    ps3_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+
+    while True:
+        if ps1_pos == ps2_pos:
+            ps1_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+        elif ps2_pos == ps3_pos:
+            ps2_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+        elif ps1_pos == ps3_pos:
+            ps3_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+        else:
+            break
+
+    player_positions = [ps1_pos, ps2_pos, ps3_pos]
+    print(player_positions)
 
 
 def plant_ships_computer():
     """
     Plants the ships for the computers board
     """
-    global comp_ship1_pos
-    comp_ship1_pos = [randint(0, board_length), randint(0, board_length)]
+    cs1_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+    cs2_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+    cs3_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+
+    global computer_positions
+
+    while True:
+        if cs1_pos == cs2_pos:
+            cs1_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+        elif cs2_pos == cs3_pos:
+            cs2_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+        elif cs1_pos == cs3_pos:
+            cs3_pos = [randint(0, board_length-1), randint(0, board_length-1)]
+        else:
+            break
+
+    computer_positions = [cs1_pos, cs2_pos, cs3_pos]
 
 
 def run_game():
@@ -58,9 +87,7 @@ def guess():
     and passes it to the validator
     """
     print("Please guess a row and a column: \n")
-
     global user_entry_row, user_entry_col
-
     while True:
         try:
             user_entry_row = int(input("Guess row: "))
@@ -100,7 +127,7 @@ def check_for_hit():
     Checks for hits when data is validated
     """
     global hits
-    if (player_ship1_pos[1] == user_entry_col and player_ship1_pos[0] == user_entry_row):
+    if [user_entry_row, user_entry_col] in player_positions:
         hits += 1
         print("You hit a battleship \n")
         update_board_hit(player_board)
@@ -108,8 +135,8 @@ def check_for_hit():
         check_win()
     else:
         print("You missed my battleship \n")
+        update_board_miss(player_board)
         print_game_board(player_board)
-        guess()
 
 
 def update_board_hit(board):
