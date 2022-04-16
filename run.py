@@ -95,29 +95,29 @@ def check_for_hit():
     if (ship1_pos[1] == user_entry_col and ship1_pos[0] == user_entry_row):
         hits += 1
         print("You hit a battleship \n")
-        update_hit = board[user_entry_col].split()
+        update_hit = player_board[user_entry_col].split()
         update_hit[user_entry_row] = "#"
         updated_row = " ".join(update_hit)
-        board[user_entry_col] = updated_row
-        print_game_board()
+        player_board[user_entry_col] = updated_row
+        print_game_board(player_board)
         check_win()
     else:
         print("You missed my battleship \n")
-        update_miss = board[user_entry_col].split()
+        update_miss = player_board[user_entry_col].split()
         update_miss[user_entry_row] = "X"
         updated_row = " ".join(update_miss)
-        board[user_entry_col] = updated_row
-        print_game_board()
+        player_board[user_entry_col] = updated_row
+        print_game_board(player_board)
         guess()
 
 
-def update_board(player):
+def update_board():
     """
     Will update the board with a hit
     """
 
 
-def check_win(player):
+def check_win():
     """
     Checks for a win to end the game
     """
