@@ -2,7 +2,7 @@ from random import randint
 
 player_board = []
 computer_board = []
-board_length = 6
+board_length = 4
 number_of_ships = 1
 hits = 0
 turns = 0
@@ -24,9 +24,17 @@ def print_game_board(board):
         print("".join(row))
 
 
+def plant_ships_player():
+    """
+    Plants the ships for the computers board
+    """
+    global player_ship1_pos
+    player_ship1_pos = [randint(0, board_length), randint(0, board_length)]
+
+
 def plant_ships_computer():
     """
-    Plants the ships
+    Plants the ships for the computers board
     """
     global comp_ship1_pos
     comp_ship1_pos = [randint(0, board_length), randint(0, board_length)]
@@ -38,8 +46,8 @@ def run_game():
     """
     make_game_board(player_board)
     make_game_board(computer_board)
-    plant_ships(player_board)
-    plant_ships(computer_board)
+    plant_ships_player()
+    plant_ships_computer()
     print_game_board(player_board)
     guess()
 
@@ -78,12 +86,12 @@ def validate_input(coordinates):
     try:
         if coordinates > board_length-1:
             raise ValueError(
-                f"You missed the Ocean, the max size is {board_length}"
+                f"You missed the Ocean, the max size is {board_length-1}"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
-        
+
     return True
 
 
@@ -92,7 +100,7 @@ def check_for_hit():
     Checks for hits when data is validated
     """
     global hits
-    if (ship1_pos[1] == user_entry_col and ship1_pos[0] == user_entry_row):
+    if (player_ship1_pos[1] == user_entry_col and player_ship1_pos[0] == user_entry_row):
         hits += 1
         print("You hit a battleship \n")
         update_board_hit(player_board)
@@ -138,7 +146,11 @@ def main():
     """
     Main functions
     """
+    print("---------------------------------------------------------")
     print("Welcome to Python Battleships")
+    print("Beat the computer by finding it's ships before it sinks yours!")
+    print("There are 3 ships in total, you will guess first!")
+    print("---------------------------------------------------------")
     run_game()
 
 
