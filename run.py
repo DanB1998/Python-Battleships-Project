@@ -1,6 +1,7 @@
 from random import randint
 
-board = []
+player_board = []
+computer_board = []
 board_length = 6
 number_of_ships = 1
 hits = 0
@@ -15,7 +16,7 @@ def make_game_board(board):
         board.append('O ' * board_length)
 
 
-def print_game_board():
+def print_game_board(board):
     """
     Showing the game board
     """
@@ -23,36 +24,23 @@ def print_game_board():
         print("".join(row))
 
 
-def rand_row(board):
-    """
-    Function to get a random column for a ship
-    """
-    return randint(0, board_length-1)
-
-
-def rand_col(board):
-    """
-    Function to get a random column for a ship
-    """
-    return randint(0, board_length-1)
-
-
 def plant_ships(board):
     """
     Plants the ships
     """
     global ship1_pos
-    ship1_pos = [rand_row(board), rand_col(board)]
-    print(ship1_pos)
+    ship1_pos = [randint(0, board_length), randint(0, board_length)]
 
 
 def run_game():
     """
     Function that will run the game
     """
-    make_game_board(board)
-    plant_ships(board)
-    print_game_board()
+    make_game_board(player_board)
+    make_game_board(computer_board)
+    plant_ships(player_board)
+    plant_ships(computer_board)
+    print_game_board(player_board)
     guess()
 
 
@@ -123,13 +111,13 @@ def check_for_hit():
         guess()
 
 
-def update_board():
+def update_board(player):
     """
     Will update the board with a hit
     """
 
 
-def check_win():
+def check_win(player):
     """
     Checks for a win to end the game
     """
