@@ -30,7 +30,7 @@ def rand_col(board):
 
 def plant_ships():
     global ship1_pos
-    ship1_pos = [(rand_row(board), rand_col(board)]
+    ship1_pos = [rand_row(board), rand_col(board)]
     print(ship1_pos)
 
 
@@ -51,36 +51,37 @@ def guess():
     """
     print("Please guess a row and a column")
 
-    global user_guess
+    global user_entry_row
+    global user_entry_col
 
-    user_guess = input("Guess coordinates here: ")
+    user_entry_row = input("Guess row: ")
+    user_entry_col = input("Guess column: ")
 
-    if validate_user_input(user_guess):
-        print(f"You guessed {user_guess}")
+    if (validate_input(user_entry_row) and validate_input(user_entry_col)):
+        print(f"You guessed {[user_entry_row, user_entry_col]}")
         check_for_hit()
 
 
 # Input validation
-def validate_user_input(coordinates):
+def validate_input(coordinates):
     """
     A function that will validate the user's
-    input as 2 numbers representing a coordinate
+    input numbers representing a coordinate
     """
     try:
-        [int(coord) for coord in coordinates]
-        if len(coordinates) != 2:
+        if len(coordinates) != 1:
             raise ValueError(
-                f"Only 2 values needed, you gave {len(coordinates)}"
+                f"Only 1 value needed, you gave {len(coordinates)}"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
+        return False
 
-    return coordinates
+    return True
 
 
 def check_for_hit():
-    
-    if (ship1_pos == user_guess):
+    if (ship1_pos[1] == int(user_entry_col) and ship1_pos[0] == int(user_entry_row)):
         print("You hit my battleship")
     else:
         print("You missed my battleship")
