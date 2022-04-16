@@ -19,15 +19,17 @@ def print_game_board(board):
         print(x)
 
 
-# Function to get a random location for a ship
+# Function to get a random column for a ship
 def rand_row(board):
     return randint(0, board_length-1)
 
 
+# Function to get a random column for a ship
 def rand_col(board):
     return randint(0, board_length-1)
 
 
+# Plants the ships
 def plant_ships():
     global ship1_pos
     ship1_pos = [rand_row(board), rand_col(board)]
@@ -46,7 +48,7 @@ def run_game():
 # User guess
 def guess():
     """
-    Takes a guess from a user 
+    Takes a guess from a user
     and passes it to the validator
     """
     print("Please guess a row and a column")
@@ -60,6 +62,8 @@ def guess():
     if (validate_input(user_entry_row) and validate_input(user_entry_col)):
         print(f"You guessed {[user_entry_row, user_entry_col]}")
         check_for_hit()
+    else:
+        guess()
 
 
 # Input validation
@@ -69,9 +73,13 @@ def validate_input(coordinates):
     input numbers representing a coordinate
     """
     try:
-        if len(coordinates) != 1:
+        if(int(coordinates) > board_length-1):
             raise ValueError(
-                f"Only 1 value needed, you gave {len(coordinates)}"
+                f"You missed the Ocean, the max size is {board_length}"
+            )
+        elif len(coordinates) != 1:
+            raise ValueError(
+                f"Only 2 values needed, you gave {len(coordinates)}"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
@@ -80,12 +88,13 @@ def validate_input(coordinates):
     return True
 
 
+# Checks for hits when data is validated
 def check_for_hit():
     if (ship1_pos[1] == int(user_entry_col) and ship1_pos[0] == int(user_entry_row)):
         print("You hit my battleship")
     else:
-        print("You missed my battleship")
-    
+        print("You missed my battleship")    
+
 
 # Main functions
 def main():
