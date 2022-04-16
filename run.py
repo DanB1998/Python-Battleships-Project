@@ -2,7 +2,7 @@ from random import randint
 
 board = []
 board_length = 6
-number_of_ships = 3
+number_of_ships = 1
 hits = 0
 turns = 0
 
@@ -61,10 +61,9 @@ def guess():
     Takes a guess from a user
     and passes it to the validator
     """
-    print("Please guess a row and a column")
+    print("Please guess a row and a column: \n")
 
-    global user_entry_row
-    global user_entry_col
+    global user_entry_row, user_entry_col
 
     while True:
         try:
@@ -77,7 +76,7 @@ def guess():
             break
 
     if (validate_input(user_entry_row) and validate_input(user_entry_col)):
-        print(f"You guessed {[user_entry_row, user_entry_col]}")
+        print(f"You guessed {[user_entry_row, user_entry_col]} \n")
         check_for_hit()
     else:
         guess()
@@ -104,23 +103,40 @@ def check_for_hit():
     """
     Checks for hits when data is validated
     """
+    global hits
     if (ship1_pos[1] == user_entry_col and ship1_pos[0] == user_entry_row):
-        print("You hit a battleship")
+        hits += 1
+        print("You hit a battleship \n")
         update_hit = board[user_entry_col].split()
         update_hit[user_entry_row] = "#"
         updated_row = " ".join(update_hit)
         board[user_entry_col] = updated_row
         print_game_board()
-        
-
+        check_win()
     else:
-        print("You missed my battleship")
+        print("You missed my battleship \n")
+        update_miss = board[user_entry_col].split()
+        update_miss[user_entry_row] = "X"
+        updated_row = " ".join(update_miss)
+        board[user_entry_col] = updated_row
+        print_game_board()
+        guess()
 
 
 def update_board():
     """
     Will update the board with a hit
     """
+
+
+def check_win():
+    """
+    Checks for a win to end the game
+    """
+    if hits == number_of_ships:
+        print("\nYou Win")
+    else:
+        guess()
 
 
 def main():
