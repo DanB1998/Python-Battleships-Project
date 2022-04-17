@@ -11,7 +11,7 @@ def make_game_board(board):
     """
     Making the game board
     """
-    for x in range(board_length):
+    for i in range(board_length):
         board.append('O ' * board_length)
 
 
@@ -122,21 +122,41 @@ def validate_input(coordinates):
     return True
 
 
+def computer_turn():
+    """
+    Computer guess
+    """
+    global computer_guess
+    computer_guess = [randint(0, board_length-1), randint(0, board_length-1)]
+    print(f"Computer guessed {computer_guess}")
+    check_for_hit()
+
+
 def check_for_hit():
     """
     Checks for hits when data is validated
     """
     global hits
     if [user_entry_row, user_entry_col] in player_positions:
-        hits += 1
         print("You hit a battleship \n")
         update_board_hit(player_board)
-        print_game_board(player_board)
-        check_win()
     else:
         print("You missed my battleship \n")
         update_board_miss(player_board)
-        print_game_board(player_board)
+
+    computer_turn()
+
+
+def check_for_hit_computer():
+    """
+    checks for a hit from the computer
+    """
+    if computer_guess in computer_positions:
+        print("Computer hit a battleship \n")
+        update_board_hit(computer_board)
+    else:
+        print("Computer missed a battleship \n")
+        update_board_miss(computer_board)
 
 
 def update_board_hit(board):
