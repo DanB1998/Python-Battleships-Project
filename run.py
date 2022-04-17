@@ -4,7 +4,8 @@ player_board = []
 computer_board = []
 board_length = 4
 number_of_ships = 3
-hits = 0
+player_hits = 0
+computer_hits = 0
 
 
 def make_game_board(board):
@@ -129,7 +130,7 @@ def computer_turn():
     global computer_guess
     computer_guess = [randint(0, board_length-1), randint(0, board_length-1)]
     print(f"Computer guessed {computer_guess}")
-    check_for_hit()
+    check_for_hit_computer()
 
 
 def check_for_hit():
@@ -139,10 +140,10 @@ def check_for_hit():
     global hits
     if [user_entry_row, user_entry_col] in player_positions:
         print("You hit a battleship \n")
-        update_board_hit(player_board)
+        update_board_hit(player_board, user_entry_row, user_entry_col)
     else:
         print("You missed my battleship \n")
-        update_board_miss(player_board)
+        update_board_miss(player_board, user_entry_row, user_entry_col)
 
     computer_turn()
 
@@ -153,38 +154,55 @@ def check_for_hit_computer():
     """
     if computer_guess in computer_positions:
         print("Computer hit a battleship \n")
-        update_board_hit(computer_board)
+        update_board_hit(computer_board, computer_guess[0], computer_guess[1])
     else:
         print("Computer missed a battleship \n")
-        update_board_miss(computer_board)
+        update_board_miss(computer_board, computer_guess[0], computer_guess[1])
+
+    round_end()
 
 
-def update_board_hit(board):
+def update_board_hit(board, entry_row, entry_col):
     """
     Will update the board with a hit
     """
-    update_hit = board[user_entry_col].split()
-    update_hit[user_entry_row] = "#"
+    update_hit = board[entry_col].split()
+    update_hit[entry_row] = "#"
     updated_row = " ".join(update_hit)
-    board[user_entry_col] = updated_row
+    board[entry_col] = updated_row
 
 
-def update_board_miss(board):
+def update_board_miss(board, entry_row, entry_col):
     """
     Will update the board with a hit
     """
-    update_miss = board[user_entry_col].split()
-    update_miss[user_entry_row] = "X"
+    update_miss = board[entry_col].split()
+    update_miss[entry_row] = "X"
     updated_row = " ".join(update_miss)
-    board[user_entry_col] = updated_row
+    board[entry_col] = updated_row
+
+
+def round_end():
+    """
+    End the round by showing the state of the game
+    """
+    print("------------------------------------------------")
+    print("At the end of the round your board:\n")
+    print_game_board(player_board)
+    print("Computer's board:\n")
+    print_game_board(computer_board)
+    print("------------------------------------------------")
+    check_win()
 
 
 def check_win():
     """
     Checks for a win to end the game
     """
-    if hits == number_of_ships:
+    if player_hits == number_of_ships:
         print("\nYou Win")
+    elif computer_hits == number_of_ships:
+        print("\nYou lose")
     else:
         guess()
 
