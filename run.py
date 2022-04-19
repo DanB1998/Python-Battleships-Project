@@ -13,8 +13,11 @@ class UserBoard:
         self.board = board
 
     def print_current_board(self):
+        print("   0 1 2 3 4 5")
+        row_no = 0
         for row in self.board:
-            print("|" + "|".join(row) + "|")
+            print(row_no, "|" + "|".join(row) + "|")
+            row_no += 1
 
 
 def rungame():
