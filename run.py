@@ -1,7 +1,9 @@
 import random
 
-PLAYER_BOARD = [["~"] * 6 for i in range(6)]
-COMPUTER_BOARD = [["~"] * 6 for i in range(6)]
+PLAYER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
+COMPUTER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
+BOARD_SIZE = 6
+NUMBER_OF_SHIPS = 3
 
 
 class UserBoard:
@@ -18,6 +20,29 @@ class UserBoard:
         for row in self.board:
             print(row_no, "|" + "|".join(row) + "|")
             row_no += 1
+
+
+class Battleships:
+    """
+    The battleships class will look after the ships
+    """
+    def __init__(self, board):
+        self.board = board
+
+    def plant_ships(self):
+        for x in range(NUMBER_OF_SHIPS):
+            self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE), random.randint(0, BOARD_SIZE)
+            while True:
+                if (self.board[self.x_coord][self.y_coord] == 'O'):
+                    self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE), random.randint(0, BOARD_SIZE)
+                    return True
+                else:
+                    self.board[self.x_coord][self.y_coord] = 'O'
+                    return False
+
+
+    def place_ships(self):
+        pass
 
 
 def rungame():
