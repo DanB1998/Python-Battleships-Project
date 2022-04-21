@@ -30,15 +30,15 @@ class Battleships:
         self.board = board
 
     def plant_ships(self):
+        """
+        Plants ships for a given board
+        """
         for x in range(NUMBER_OF_SHIPS):
-            self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE), random.randint(0, BOARD_SIZE)
-            while True:
-                if (self.board[self.x_coord][self.y_coord] == 'O'):
-                    self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE), random.randint(0, BOARD_SIZE)
-                    return True
-                else:
-                    self.board[self.x_coord][self.y_coord] = 'O'
-                    return False
+            self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
+            while self.board[self.x_coord][self.y_coord] == 'O':
+                    self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
+            self.board[self.x_coord][self.y_coord] = 'O'
+        return self.board
 
     def user_guess(self):
         while True:
@@ -77,12 +77,16 @@ def rungame():
     This function will take the player through
     the introduction and explain the rules.
     """
+    computer_hidden_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
+    player_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
     print("---------------------------------------------------------")
     print("Welcome to Python Battleships")
     print("Beat the computer by finding it's ships before it sinks yours!")
     print("There are 3 ships in total, you will guess first!")
     print("---------------------------------------------------------\n")
-    UserBoard(PLAYER_BOARD).print_current_board()
+    UserBoard(player_board).print_current_board()
+    Battleships(computer_hidden_board).plant_ships()
+    UserBoard(computer_hidden_board).print_current_board()
 
 
 if __name__ == '__main__':
