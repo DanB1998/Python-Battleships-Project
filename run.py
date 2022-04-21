@@ -40,9 +40,42 @@ class Battleships:
                     self.board[self.x_coord][self.y_coord] = 'O'
                     return False
 
+    def user_guess(self):
+        while True:
+            try:
+                guess_row = int(input("Guess row: "))
+                guess_col = int(input("Guess column: "))
+            except ValueError:
+                print("Please enter a number")
+                continue
+            else:
+                break
+
+            if (validate_input(guess_row) and validate_input(guess_col)):
+                print(f"You guessed {[guess_row, guess_col]} \n")
+            else:
+                pass
+
 
     def place_ships(self):
         pass
+
+
+def validate_input(coordinates):
+    """
+    A function that will validate the user's
+    input numbers representing a coordinate
+    """
+    try:
+        if coordinates > BOARD_SIZE-1:
+            raise ValueError(
+                f"You missed the Ocean, the max size is {BOARD_SIZE-1}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
 
 
 def rungame():
