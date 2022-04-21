@@ -1,8 +1,8 @@
 import random
 
+BOARD_SIZE = 6
 PLAYER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 COMPUTER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
-BOARD_SIZE = 6
 NUMBER_OF_SHIPS = 3
 
 
@@ -47,18 +47,12 @@ class Battleships:
                 guess_col = int(input("Guess column: "))
             except ValueError:
                 print("Please enter a number")
-                continue
-            else:
-                break
+                return True
 
-            if (validate_input(guess_row) and validate_input(guess_col)):
-                print(f"You guessed {[guess_row, guess_col]} \n")
-            else:
-                pass
-
-
-    def place_ships(self):
-        pass
+        if (validate_input(guess_row) and validate_input(guess_col)):
+            print(f"You guessed {[guess_row, guess_col]} \n")
+        else:
+            pass
 
 
 def validate_input(coordinates):
