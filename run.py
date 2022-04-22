@@ -1,6 +1,6 @@
 import random
 
-BOARD_SIZE = 6
+BOARD_SIZE = 5
 PLAYER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 COMPUTER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 NUMBER_OF_SHIPS = 3
@@ -15,7 +15,10 @@ class UserBoard:
         self.board = board
 
     def print_current_board(self):
-        print("   0 1 2 3 4 5")
+        """
+        Prints the current board passed to it
+        """
+        print("   0 1 2 3 4")
         row_no = 0
         for row in self.board:
             print(row_no, "|" + "|".join(row) + "|")
@@ -45,20 +48,21 @@ class Battleships:
             try:
                 guess_row = int(input("Guess row: "))
                 guess_col = int(input("Guess column: "))
+                
+                if (validate_input(guess_row) and validate_input(guess_col)):
+                    print(f"You guessed {[guess_row, guess_col]} \n")
+                    return False
+
             except ValueError:
                 print("Please enter a number")
                 return True
-
-        if (validate_input(guess_row) and validate_input(guess_col)):
-            print(f"You guessed {[guess_row, guess_col]} \n")
-        else:
-            pass
+            
 
 
 def validate_input(coordinates):
     """
     A function that will validate the user's
-    input numbers representing a coordinate
+    input numbers representing a coordinate.
     """
     try:
         if coordinates > BOARD_SIZE-1:
@@ -86,7 +90,7 @@ def rungame():
     print("---------------------------------------------------------\n")
     UserBoard(player_board).print_current_board()
     Battleships(computer_hidden_board).plant_ships()
-    UserBoard(computer_hidden_board).print_current_board()
+    Battleships(computer_hidden_board).user_guess()
 
 
 if __name__ == '__main__':
