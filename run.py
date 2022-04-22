@@ -39,24 +39,26 @@ class Battleships:
         for x in range(NUMBER_OF_SHIPS):
             self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
             while self.board[self.x_coord][self.y_coord] == 'O':
-                    self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
+                self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
             self.board[self.x_coord][self.y_coord] = 'O'
         return self.board
 
     def user_guess(self):
+        """
+        Will initiate the user guess
+        """
         while True:
             try:
                 guess_row = int(input("Guess row: "))
                 guess_col = int(input("Guess column: "))
-                
-                if (validate_input(guess_row) and validate_input(guess_col)):
-                    print(f"You guessed {[guess_row, guess_col]} \n")
-                    return False
 
             except ValueError:
                 print("Please enter a number")
-                return True
-            
+
+        if (validate_input(guess_row) and validate_input(guess_col)):
+            print(f"You guessed {[guess_row, guess_col]} \n")
+        else:
+            Battleships(self).user_guess()
 
 
 def validate_input(coordinates):
