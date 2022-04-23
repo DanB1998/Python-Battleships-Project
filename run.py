@@ -51,7 +51,11 @@ class Battleships:
             try:
                 guess_row = int(input("Guess row: "))
                 guess_col = int(input("Guess column: "))
-
+                
+                if (validate_input(guess_row) and validate_input(guess_col)):
+                    print(f"You guessed {[guess_row, guess_col]} \n")
+                else:
+                    Battleships(self).user_guess()
             except ValueError:
                 print("Please enter a number")
 
@@ -73,9 +77,9 @@ def validate_input(coordinates):
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
-        return False
 
     return True
+
 
 
 def rungame():
@@ -93,6 +97,7 @@ def rungame():
     UserBoard(player_board).print_current_board()
     Battleships(computer_hidden_board).plant_ships()
     Battleships(computer_hidden_board).user_guess()
+    print('end')
 
 
 if __name__ == '__main__':
