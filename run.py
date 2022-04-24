@@ -67,7 +67,7 @@ class Battleships:
 
 class ComputerHandler:
     """
-    A class that will handle the computer and non-player related code
+    A class that will handle the computer and non-player related processes
     """
     def __init__(self, board):
         self.board = board
@@ -94,21 +94,31 @@ def rungame():
     This function will take the player through
     the introduction and explain the rules.
     """
+    computer_display_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
     computer_hidden_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
     player_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
+    # Game Welcome
     print("---------------------------------------------------------")
     print("Welcome to Python Battleships")
     print("Beat the computer by finding it's ships before it sinks yours!")
     print("There are 3 ships in total, you will guess first!")
     print("---------------------------------------------------------\n")
+    # Prints User Board
     UserBoard(player_board).print_current_board()
+    # Plant ships on the computers hidden board
     Battleships(computer_hidden_board).plant_ships()
+    # Prints the computer board to see where the ships have been placed
     UserBoard(computer_hidden_board).print_current_board()
+    # Sets the guess locally so it can be checked by the run game function
     user_guess_row, user_guess_col = Battleships(computer_hidden_board).user_guess()
+    # Check if the users guess is where a ship is positioned
     if computer_hidden_board[user_guess_col][user_guess_row] == "O":
         print("You hit a battleship!")
+        computer_display_board[user_guess_col][user_guess_row] = "#"
     else:
         print("You missed a battleship")
+        computer_display_board[user_guess_col][user_guess_row] = "X"
+    UserBoard(computer_display_board).print_current_board()
     print('end')
 
 
