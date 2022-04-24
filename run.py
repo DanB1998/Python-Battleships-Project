@@ -27,7 +27,7 @@ class UserBoard:
 
 class Battleships:
     """
-    The battleships class will look after the ships
+    The battleships class will look after the ships and handle user guess
     """
     def __init__(self, board):
         self.board = board
@@ -49,7 +49,7 @@ class Battleships:
         """
         while True:
             try:
-                guess_row = int(input("Guess row: "))
+                guess_row = int(input("\nGuess row: "))
                 guess_col = int(input("Guess column: "))
             except ValueError:
                 print("Please enter a number")
@@ -62,6 +62,14 @@ class Battleships:
             check_guess()
         else:
             Battleships(self).user_guess()
+
+
+class ComputerHandler:
+    """
+    A class that will handle the computer and non-player related code
+    """
+    def __init__(self, board):
+        self.board = board
 
 
 def validate_input(coordinates):
