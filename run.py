@@ -49,8 +49,8 @@ class Battleships:
         """
         while True:
             try:
-                guess_row = int(input("\nGuess row: "))
-                guess_col = int(input("Guess column: "))
+                guess_col = int(input("\nGuess column: "))
+                guess_row = int(input("Guess row: "))
             except ValueError:
                 print("Please enter a number")
                 continue
@@ -71,6 +71,17 @@ class ComputerHandler:
     """
     def __init__(self, board):
         self.board = board
+
+    def generate_guess(self):
+        """
+        Generates coordinates to use as computer guess
+        """
+        previous_guesses = []
+        gen_row = random.randint(0, BOARD_SIZE-1)
+        gen_col = random.randint(0, BOARD_SIZE-1)
+        previous_guesses.append(gen_row, gen_col)
+
+        return gen_row, gen_col
 
 
 def validate_input(coordinates):
@@ -123,9 +134,10 @@ def rungame():
             computer_display_board[user_guess_col][user_guess_row] = "X"
         # Prints computer board to user after updating the users guess
         UserBoard(computer_display_board).print_current_board()
-    
+
     print('end')
 
 
 if __name__ == '__main__':
+    # setup()
     rungame()
