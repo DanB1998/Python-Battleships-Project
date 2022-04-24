@@ -110,15 +110,20 @@ def rungame():
     # Prints the computer board to see where the ships have been placed
     UserBoard(computer_hidden_board).print_current_board()
     # Sets the guess locally so it can be checked by the run game function
-    user_guess_row, user_guess_col = Battleships(computer_hidden_board).user_guess()
-    # Check if the users guess is where a ship is positioned
-    if computer_hidden_board[user_guess_col][user_guess_row] == "O":
-        print("You hit a battleship!")
-        computer_display_board[user_guess_col][user_guess_row] = "#"
-    else:
-        print("You missed a battleship")
-        computer_display_board[user_guess_col][user_guess_row] = "X"
-    UserBoard(computer_display_board).print_current_board()
+    hits = 0
+    while hits < 3:
+        user_guess_row, user_guess_col = Battleships(computer_hidden_board).user_guess()
+        # Check if the users guess is where a ship is positioned
+        if computer_hidden_board[user_guess_col][user_guess_row] == "O":
+            hits += 1
+            print("You hit a battleship!")
+            computer_display_board[user_guess_col][user_guess_row] = "#"
+        else:
+            print("You missed a battleship")
+            computer_display_board[user_guess_col][user_guess_row] = "X"
+        # Prints computer board to user after updating the users guess
+        UserBoard(computer_display_board).print_current_board()
+    
     print('end')
 
 
