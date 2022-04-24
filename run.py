@@ -59,9 +59,10 @@ class Battleships:
 
         if (validate_input(guess_row) and validate_input(guess_col)):
             print(f"You guessed {[guess_row, guess_col]} \n")
-            check_guess()
         else:
             Battleships(self).user_guess()
+
+        return guess_row, guess_col
 
 
 class ComputerHandler:
@@ -88,10 +89,6 @@ def validate_input(coordinates):
     return True
 
 
-def check_guess():
-    print("guess checked")
-
-
 def rungame():
     """
     This function will take the player through
@@ -106,7 +103,12 @@ def rungame():
     print("---------------------------------------------------------\n")
     UserBoard(player_board).print_current_board()
     Battleships(computer_hidden_board).plant_ships()
-    Battleships(computer_hidden_board).user_guess()
+    UserBoard(computer_hidden_board).print_current_board()
+    user_guess_row, user_guess_col = Battleships(computer_hidden_board).user_guess()
+    if computer_hidden_board[user_guess_col][user_guess_row] == "O":
+        print("You hit a battleship!")
+    else:
+        print("You missed a battleship")
     print('end')
 
 
