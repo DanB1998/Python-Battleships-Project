@@ -50,17 +50,22 @@ class Battleships:
         while True:
             try:
                 guess_col = int(input("\nGuess column: "))
-                guess_row = int(input("Guess row: "))
+                if guess_col < 0 or guess_col > BOARD_SIZE:
+                    print("Number is outside of range")
+                else:
+                    break
             except ValueError:
                 print("Please enter a number")
-                continue
-            else:
-                break
 
-        if (validate_input(guess_row) and validate_input(guess_col)):
-            print(f"You guessed {[guess_col, guess_row]} \n")
-        else:
-            Battleships(self).user_guess()
+        while True:
+            try:
+                guess_row = int(input("\nGuess row: "))
+                if guess_row < 0 or guess_row > BOARD_SIZE:
+                    print("Number is outside of range")
+                else:
+                    break
+            except ValueError:
+                print("Please enter a number")
 
         return guess_col, guess_row
 
@@ -80,22 +85,6 @@ class ComputerHandler:
         gen_row = random.randint(0, BOARD_SIZE-1)
 
         return gen_col, gen_row
-
-
-def validate_input(coordinates):
-    """
-    A function that will validate the user's
-    input numbers representing a coordinate.
-    """
-    try:
-        if coordinates > BOARD_SIZE-1:
-            raise ValueError(
-                f"You missed the Ocean, the max size is {BOARD_SIZE-1}"
-            )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-
-    return True
 
 
 def rungame():
@@ -136,10 +125,10 @@ def rungame():
         # Check computer guess against player board
         if player_board[comp_guess_row][comp_guess_col] == "O":
             computer_hits += 1
-            print("You hit a battleship!")
+            print("Computer hit a battleship!")
             player_board[comp_guess_row][comp_guess_col] = "#"
         else:
-            print("You missed a battleship")
+            print("Computer missed a battleship")
             player_board[comp_guess_row][comp_guess_col] = "X"
         # Prints computer board to user after updating the users guess
         UserBoard(computer_display_board).print_current_board()
