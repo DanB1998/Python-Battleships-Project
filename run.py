@@ -58,11 +58,11 @@ class Battleships:
                 break
 
         if (validate_input(guess_row) and validate_input(guess_col)):
-            print(f"You guessed {[guess_row, guess_col]} \n")
+            print(f"You guessed {[guess_col, guess_row]} \n")
         else:
             Battleships(self).user_guess()
 
-        return guess_row, guess_col
+        return guess_col, guess_row
 
 
 class ComputerHandler:
@@ -76,12 +76,10 @@ class ComputerHandler:
         """
         Generates coordinates to use as computer guess
         """
-        previous_guesses = []
-        gen_row = random.randint(0, BOARD_SIZE-1)
         gen_col = random.randint(0, BOARD_SIZE-1)
-        previous_guesses.append(gen_row, gen_col)
+        gen_row = random.randint(0, BOARD_SIZE-1)
 
-        return gen_row, gen_col
+        return gen_col, gen_row
 
 
 def validate_input(coordinates):
@@ -121,19 +119,31 @@ def rungame():
     # Prints the computer board to see where the ships have been placed
     UserBoard(computer_hidden_board).print_current_board()
     # Sets the guess locally so it can be checked by the run game function
-    hits = 0
-    while hits < 3:
-        user_guess_row, user_guess_col = Battleships(computer_hidden_board).user_guess()
+    player_hits = 0
+    computer_hits = 0
+    while player_hits < 3 and computer_hits < 3:
+        user_guess_col, user_guess_row = Battleships(computer_hidden_board).user_guess()
         # Check if the users guess is where a ship is positioned
-        if computer_hidden_board[user_guess_col][user_guess_row] == "O":
-            hits += 1
+        if computer_hidden_board[user_guess_row][user_guess_col] == "O":
+            player_hits += 1
             print("You hit a battleship!")
-            computer_display_board[user_guess_col][user_guess_row] = "#"
+            computer_display_board[user_guess_row][user_guess_col] = "#"
         else:
             print("You missed a battleship")
-            computer_display_board[user_guess_col][user_guess_row] = "X"
+            computer_display_board[user_guess_row][user_guess_col] = "X"
+        
+        comp_guess_col, comp_guess_row = ComputerHandler(player_board).generate_guess()
+        # Check computer guess against player board
+        if player_board[comp_guess_row][comp_guess_col] == "O":
+            computer_hits += 1
+            print("You hit a battleship!")
+            player_board[comp_guess_row][comp_guess_col] = "#"
+        else:
+            print("You missed a battleship")
+            player_board[comp_guess_row][comp_guess_col] = "X"
         # Prints computer board to user after updating the users guess
         UserBoard(computer_display_board).print_current_board()
+        UserBoard(player_board).print_current_board()
 
     print('end')
 
