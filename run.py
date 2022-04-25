@@ -50,7 +50,7 @@ class Battleships:
         while True:
             try:
                 guess_col = int(input("\nGuess column: "))
-                if guess_col < 0 or guess_col > BOARD_SIZE:
+                if guess_col < 0 or guess_col > BOARD_SIZE-1:
                     print("Number is outside of range")
                 else:
                     break
@@ -60,7 +60,7 @@ class Battleships:
         while True:
             try:
                 guess_row = int(input("\nGuess row: "))
-                if guess_row < 0 or guess_row > BOARD_SIZE:
+                if guess_row < 0 or guess_row > BOARD_SIZE-1:
                     print("Number is outside of range")
                 else:
                     break
@@ -112,6 +112,9 @@ def rungame():
     computer_hits = 0
     while player_hits < 3 and computer_hits < 3:
         user_guess_col, user_guess_row = Battleships(computer_hidden_board).user_guess()
+        while computer_hidden_board[user_guess_row][user_guess_col] == "X" or "#":
+            print("You have already guessed this area")
+            user_guess_col, user_guess_row = Battleships(computer_hidden_board).user_guess()
         # Check if the users guess is where a ship is positioned
         if computer_hidden_board[user_guess_row][user_guess_col] == "O":
             player_hits += 1
@@ -122,6 +125,8 @@ def rungame():
             computer_display_board[user_guess_row][user_guess_col] = "X"
         
         comp_guess_col, comp_guess_row = ComputerHandler(player_board).generate_guess()
+        while player_board[comp_guess_row][user_guess_col] == "X" or "#":
+            comp_guess_col, comp_guess_row = ComputerHandler(player_board).generate_guess()
         # Check computer guess against player board
         if player_board[comp_guess_row][comp_guess_col] == "O":
             computer_hits += 1
