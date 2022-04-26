@@ -1,4 +1,5 @@
 import random
+import time
 
 
 class UserBoard:
@@ -20,7 +21,7 @@ class UserBoard:
         """
         self.ships.append((col, row))
         if self.name != "Computer":
-            self.board[col][row] = "O"
+            self.board[row][col] = "O"
 
     def store_guesses(self, col, row):
         """
@@ -44,10 +45,10 @@ class UserBoard:
         Will compare the guess to the self's board
         """
         self.guesses.append((col, row))
-        self.board[col][row] = "X"
+        self.board[row][col] = "X"
 
         if (col, row) in self.ships:
-            self.board[col][row] = "#"
+            self.board[row][col] = "#"
             return "Hit"
         else:
             return "Miss"
@@ -96,6 +97,20 @@ class UserBoard:
         return comp_col, comp_row
 
 
+def player_win():
+    """
+    Code runs when the player wins
+    """
+    pass
+
+
+def comp_win():
+    """
+    Code runs when the computer wins
+    """
+    pass
+
+
 def setup_game():
     """
     Sets up the game to play
@@ -114,6 +129,21 @@ def setup_game():
         player_board.plant_ships()
 
     start_game(player_board, computer_board)
+
+
+def end_round(player_board, computer_board, hits, hits2):
+    print("\nThats the end of this round\n")
+    print("Lets take a look at the boards\n")
+    player_board.print_board()
+    computer_board.print_board()
+    print(f"\n{player_board.name}'s score: {hits}, {computer_board.name}'s score: {hits2}")
+    time.sleep(5)
+    print("\nNext round beginning in \n3")
+    time.sleep(1)
+    print("2")
+    time.sleep(1)
+    print("1")
+    time.sleep(1)
 
 
 def start_game(player_board, computer_board):
@@ -149,7 +179,11 @@ def start_game(player_board, computer_board):
             print("Computer sunk a battleship")
         else:
             print("Computer missed a battleship")
-
+        end_round(player_board, computer_board, player_hits, comp_hits)
+    if player_hits == 3:
+        player_win()
+    else:
+        computer_win()
 
 if __name__ == '__main__':
     # setup_terminal()
