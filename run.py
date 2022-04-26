@@ -27,8 +27,14 @@ class UserBoard:
             print(row_no, "|" + "|".join(row) + "|")
             row_no += 1
 
+    def store_guesses(self, col, row):
+        """
+        This method will store the guesses made by the board owner
+        """
+        self.guesses.append((col, row))
 
-def plant_ships(self, num_ships, board_size):
+    
+    def plant_ships(self, num_ships, board_size):
     """
     Plants ships randomly for the computer's board
     """
@@ -36,34 +42,11 @@ def plant_ships(self, num_ships, board_size):
     print("\nThe computer has planted it's ships")
     for x in range(num_ships):
         self.x_coord, self.y_coord = random.randint(0, board_size-1), random.randint(0, board_size-1)
-        while self.board[self.x_coord][self.y_coord] == 'O':
+        while (self.x_coord, self.y_coord) in self.guesses:
             self.x_coord, self.y_coord = random.randint(0, board_size-1), random.randint(0, board_size-1)
-        self.board[self.x_coord][self.y_coord] = 'O'
+        self.x_coord, self.y_coord.append(guesses)
     return self.board
 
-def user_plant_ships(self, num_ships):
-    """
-    Lets the user select where their ships will go.
-    """
-    print("""
-\nSo, Where would you like to plant your ships?
-\nShips are only 1x1, so only 1 set of coordinates is needed for each
-""")
-    for x in range(num_ships):
-        time.sleep(2.5)
-        print(f"\nShip {x+1} location?")
-        ship_col, ship_row = Battleships(PLAYER_BOARD).user_input()
-        while PLAYER_BOARD[ship_row][ship_col] == "O":
-            time.sleep(1)
-            print("\nYou have already chosen this area, try again")
-            ship_col, ship_row = Battleships(PLAYER_BOARD).user_input()
-            PLAYER_BOARD[ship_row][ship_col] = "O"
-            print(f"""
-You planted a ship on {ship_col}, {ship_row}
-\nHere is a look at your board
-""")
-            time.sleep(2)
-            UserBoard(PLAYER_BOARD).print_current_board()
 
 def setup_game():
     """
@@ -77,7 +60,13 @@ def setup_game():
     computer_board = UserBoard(board_size, num_ships, name, type="computer")
 
     plant_ships(computer_board, num_ships, board_size)
+    plant_ships(player_board, num_ships, board_size)
     
+    start_game(player_board, computer_board)
+
+
+def start_game(player_board, computer_board):
+    pass
 
 
 if __name__ == '__main__':
