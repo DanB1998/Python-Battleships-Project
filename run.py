@@ -3,7 +3,7 @@ from setup import setup
 import time
 
 BOARD_SIZE = 5
-COMPUTER_DISPLAY_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
+COMPUTER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 COMPUTER_HIDDEN_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 PLAYER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 NUMBER_OF_SHIPS = 3
@@ -21,6 +21,7 @@ class UserBoard:
         """
         Prints the current board passed to it
         """
+        print(board)
         print("\n   0 1 2 3 4")
         row_no = 0
         for row in self.board:
@@ -118,27 +119,29 @@ class ComputerHandler:
 
 def rungame():
     time.sleep(3)
+
     # Plant ships on the computers hidden board
     ComputerHandler(COMPUTER_HIDDEN_BOARD).plant_ships()
     time.sleep(2)
-    print("Its time to play, you're guessing first. Choose a coordinate")
+    print("\nIts time to play, you're guessing first. Choose a coordinate")
     time.sleep(2)
     # Sets the guess locally so it can be checked by the run game function
     player_hits = 0
     computer_hits = 0
     while player_hits < 3 and computer_hits < 3:
+        time.sleep(2)
         user_col, user_row = Battleships(COMPUTER_HIDDEN_BOARD).user_input()
-        while COMPUTER_DISPLAY_BOARD[user_row][user_col] == "X":
+        while COMPUTER_BOARD[user_row][user_col] == "X":
             print("You have already guessed this area")
             user_col, user_row = Battleships(COMPUTER_HIDDEN_BOARD).user_input()
         # Check if the users guess is where a ship is positioned
         if COMPUTER_HIDDEN_BOARD[user_row][user_col] == "O":
             player_hits += 1
             print("You hit a battleship!")
-            COMPUTER_DISPLAY_BOARD[user_row][user_col] = "#"
+            COMPUTER_BOARD[user_row][user_col] = "#"
         else:
             print("You missed a battleship")
-            COMPUTER_DISPLAY_BOARD[user_row][user_col] = "X"
+            COMPUTER_BOARD[user_row][user_col] = "X"
         
         comp_guess_col, comp_guess_row = ComputerHandler(PLAYER_BOARD).generate_guess()
         while PLAYER_BOARD[comp_guess_row][comp_guess_col] == "X":
@@ -152,7 +155,7 @@ def rungame():
             print("Computer missed a battleship")
             PLAYER_BOARD[comp_guess_row][comp_guess_col] = "X"
         # Prints computer board to user after updating the users guess
-        UserBoard(COMPUTER_DISPLAY_BOARD).print_current_board()
+        UserBoard(COMPUTER_BOARD).print_current_board()
         UserBoard(PLAYER_BOARD).print_current_board()
 
     print('end')
