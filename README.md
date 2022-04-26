@@ -68,16 +68,21 @@ The methods allow the board to assign any relevant information to itself, and al
 <hr>
 
 ### Validator testing
+<hr>
 
 There were no errors when passing the code through the PEP8 validator at http://pep8online.com/
 
 ## Deployment
 <hr>
+Please note that at the time of deployment for this project, heroku was not allowing links to github due to some for of security issue, so deployment of this app was pushed through the console.
+Here are the steps to deploying this way.
 
 1. Create a new app on the Heroku dashboard.
 2. Add the python buildpack, followed by the node.js buildpack.
-3. Head to the deploy section and connect the battleships repository to Heroku.
-4. Selecting the 'master' branch, deploy the app.
+3. Head to the console of the repository in gitpod.
+4. login to heroku through the console using `heroku login -i`
+5. Run command `heroku git:remote -a python-battleships-game`
+6. Push changes using `git push heroku
 
 ## Credits
 <hr>
