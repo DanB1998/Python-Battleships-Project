@@ -24,6 +24,12 @@ class UserBoard:
         if self.name != "Computer":
             self.board[col][row] = "O"
 
+    def store_guesses(self, col, row):
+        """
+        This method will store the guesses made by the board owner
+        """
+        self.guesses.append((col, row))
+
     def print_board(self):
         """
         Prints the current board passed to it
@@ -86,7 +92,11 @@ class UserBoard:
         """
         randomises a guess to use as the computers guess
         """
-        
+        comp_col = random.randint(0, self.board_size-1)
+        comp_row = random.randint(0, self.board_size-1)
+
+        return comp_col, comp_row
+
 
 def setup_game():
     """
@@ -122,12 +132,25 @@ def start_game(player_board, computer_board):
     print(computer_board.ships)
     while player_hits < num_ships and comp_hits < num_ships:
         col, row = computer_board.user_guess()
+        while (col, row) in computer_board.guesses:
+            print("You've already guessed here! Try again")
+            col, row = computer_board.user_guess()
         check = computer_board.guess(col, row)
         if check == "Hit":
             player_hits += 1
             print("You sunk a battleship")
         else:
             print("You missed a battleship")
+        print("Computer will now guess...")
+        col, row = player_board.computer_guess()
+        while (col, row) in player_board.guesses:
+            col, row = computer_board.user_guess()
+        check = player_board.guess(col, row)
+        if check == "Hit":
+            comp_hits += 1
+            print("Computer sunk a battleship")
+        else:
+            print("Computer missed a battleship")
 
 
 if __name__ == '__main__':
