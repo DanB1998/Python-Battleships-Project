@@ -32,17 +32,6 @@ class Battleships:
     def __init__(self, board):
         self.board = board
 
-    def plant_ships(self):
-        """
-        Plants ships for a given board
-        """
-        for x in range(NUMBER_OF_SHIPS):
-            self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
-            while self.board[self.x_coord][self.y_coord] == 'O':
-                self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
-            self.board[self.x_coord][self.y_coord] = 'O'
-        return self.board
-
     def user_guess(self):
         """
         Will initiate the user guess
@@ -86,6 +75,16 @@ class ComputerHandler:
 
         return gen_col, gen_row
 
+    def plant_ships(self):
+        """
+        Plants ships randomly for the computer's board
+        """
+        for x in range(NUMBER_OF_SHIPS):
+            self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
+            while self.board[self.x_coord][self.y_coord] == 'O':
+                self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
+            self.board[self.x_coord][self.y_coord] = 'O'
+        return self.board
 
 def rungame():
     """
@@ -104,7 +103,7 @@ def rungame():
     # Prints User Board
     UserBoard(player_board).print_current_board()
     # Plant ships on the computers hidden board
-    Battleships(computer_hidden_board).plant_ships()
+    ComputerHandler(computer_hidden_board).plant_ships()
     # Prints the computer board to see where the ships have been placed
     UserBoard(computer_hidden_board).print_current_board()
     # Sets the guess locally so it can be checked by the run game function
