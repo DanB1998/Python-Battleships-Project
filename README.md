@@ -42,10 +42,34 @@ In this `Try and Except` statement the `Try` will execute until the input is an 
 
 Only when both of these instances conclude that the input is valid the loop will then break and do the same for the other coordinate. Once both are validated the row and column values will be returned.
 
+### The Data Model
+<hr>
+
+The data model used is the UserBoard class. This class stores:
+
+1. The size of the board
+2. The number of ships on the board
+3. The player
+4. The guesses used on that board
+5. The ships position on the board
+
+Here is a look at the classes methods with collapsed functions.
+
+*INSERT SS OF CLASS*
+
+The methods allow the board to assign any relevant information to itself, and also append inputted/received guesses or ship positions for future reference. This made it easy to construct the start game function as a lot of the information is stored or easily obtained inside the UserBoard class.
+
 ### Future Features
 <hr>
 
 * Ability to choose size and orientation of ships
+
+## Testing
+<hr>
+
+### Validator testing
+
+There were no errors when passing the code through the PEP8 validator at http://pep8online.com/
 
 ## Deployment
 <hr>
