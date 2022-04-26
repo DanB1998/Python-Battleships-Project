@@ -14,10 +14,16 @@ class UserBoard:
     Will allow boards to be printed using the
     print_current_board method
     """
-    def __init__(self, board):
-        self.board = board
+    def __init__(self, board_size, ships, name):
+        self.board = [["~"] * board_size for i in range(board_size)]
+        self.board_size = board_size
+        self.num_ships = num_ships
+        self.name = name
+        self.guesses = []
+        self.ships = []
 
-    def print_current_board(self):
+
+    def print_board(self):
         """
         Prints the current board passed to it
         """
@@ -35,7 +41,7 @@ class Battleships:
     def __init__(self, board):
         self.board = board
 
-    def user_input(self):
+    def user_guess(self):
         """
         Will initiate the user guess
         """
@@ -162,4 +168,4 @@ def rungame():
 
 if __name__ == '__main__':
     setup()
-    rungame()
+    setup_game()

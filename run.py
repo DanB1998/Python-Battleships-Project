@@ -1,6 +1,4 @@
 import random
-from setup import setup_terminal
-import time
 
 
 class UserBoard:
