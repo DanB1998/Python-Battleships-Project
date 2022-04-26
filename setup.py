@@ -1,4 +1,4 @@
-def setup():
+def setup_terminal():
     """
     This function will take the player through
     the introduction and explain the rules.
@@ -21,4 +21,4 @@ Would you like to read the instructions? Type 'Yes' or 'No'
         print("Get ready to play!")
     else:
         print("Invlaid response, restarting terminal")
-        setup()
+        setup_terminal()
