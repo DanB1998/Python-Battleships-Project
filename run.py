@@ -1,4 +1,6 @@
 import random
+from setup import setup
+import time
 
 BOARD_SIZE = 5
 COMPUTER_DISPLAY_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
@@ -19,7 +21,7 @@ class UserBoard:
         """
         Prints the current board passed to it
         """
-        print("   0 1 2 3 4")
+        print("\n   0 1 2 3 4")
         row_no = 0
         for row in self.board:
             print(row_no, "|" + "|".join(row) + "|")
@@ -63,9 +65,13 @@ class Battleships:
         """
         Lets the user select where their ships will go.
         """
-        print("Where would you like to plant your ships?")
+        print("""
+\nSo, Where would you like to plant your ships?
+\nShips are only 1x1, so only 1 set of coordinates is needed for each
+""")
         for x in range(NUMBER_OF_SHIPS):
-            print(f"\nWhere would you like to plant ship {x+1}?")
+            time.sleep(2.5)
+            print(f"\nShip {x+1} location?")
             ship_col, ship_row = Battleships(PLAYER_BOARD).user_input()
             while PLAYER_BOARD[ship_row][ship_col] == "O":
                 print("You have already chosen this area")
@@ -103,16 +109,7 @@ class ComputerHandler:
 
 
 def rungame():
-    """
-    This function will take the player through
-    the introduction and explain the rules.
-    """
-    # Game Welcome
-    print("---------------------------------------------------------")
-    print("Welcome to Python Battleships")
-    print("Beat the computer by finding it's ships before it sinks yours!")
-    print("There are 3 ships in total, you will guess first!")
-    print("---------------------------------------------------------\n")
+    time.sleep(3)
     Battleships(PLAYER_BOARD).user_plant_ships()
     # Prints User Board
     UserBoard(PLAYER_BOARD).print_current_board()
@@ -156,5 +153,5 @@ def rungame():
 
 
 if __name__ == '__main__':
-    # setup()
+    setup()
     rungame()
