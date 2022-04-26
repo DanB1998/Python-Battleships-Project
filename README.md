@@ -32,12 +32,20 @@ while True:
     try:
         user_col = int(input("\nSelect column: "))
         if user_col < 0 or user_col > self.board_size-1:
-                print("Number is outside of range")
+            print("Number is outside of range")
         else:
             break
     except ValueError:
         print("Please enter a number")
 ```
+In this `Try and Except` statement the `Try` will execute until the input is an integer as it is wrapped in a for loop that is always True. When an integer is entered it will then progress onto the `if / else` statement which will check that if input is outside the board range.
+
+Only when both of these instances conclude that the input is valid the loop will then break and do the same for the other coordinate. Once both are validated the row and column values will be returned.
+
+### Future Features
+<hr>
+
+* Ability to choose size and orientation of ships
 
 ## Deployment
 <hr>
