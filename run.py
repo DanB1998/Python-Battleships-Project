@@ -1,8 +1,9 @@
 import random
 
 BOARD_SIZE = 5
+COMPUTER_DISPLAY_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
+COMPUTER_HIDDEN_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 PLAYER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
-COMPUTER_BOARD = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
 NUMBER_OF_SHIPS = 3
 
 
@@ -32,14 +33,14 @@ class Battleships:
     def __init__(self, board):
         self.board = board
 
-    def user_guess(self):
+    def user_input(self):
         """
         Will initiate the user guess
         """
         while True:
             try:
-                guess_col = int(input("\nGuess column: "))
-                if guess_col < 0 or guess_col > BOARD_SIZE-1:
+                user_col = int(input("\nSelect column: "))
+                if user_col < 0 or user_col > BOARD_SIZE-1:
                     print("Number is outside of range")
                 else:
                     break
@@ -48,15 +49,29 @@ class Battleships:
 
         while True:
             try:
-                guess_row = int(input("\nGuess row: "))
-                if guess_row < 0 or guess_row > BOARD_SIZE-1:
+                user_row = int(input("Select row: "))
+                if user_row < 0 or user_row > BOARD_SIZE-1:
                     print("Number is outside of range")
                 else:
                     break
             except ValueError:
                 print("Please enter a number")
 
-        return guess_col, guess_row
+        return user_col, user_row
+
+    def user_plant_ships(self):
+        """
+        Lets the user select where their ships will go.
+        """
+        print("Where would you like to plant your ships?")
+        for x in range(NUMBER_OF_SHIPS):
+            print(f"\nWhere would you like to plant ship {x+1}?")
+            ship_col, ship_row = Battleships(PLAYER_BOARD).user_input()
+            while PLAYER_BOARD[ship_row][ship_col] == "O":
+                print("You have already chosen this area")
+                ship_col, ship_row = Battleships(PLAYER_BOARD).user_input()
+            PLAYER_BOARD[ship_row][ship_col] = "O"
+            UserBoard(PLAYER_BOARD).print_current_board()
 
 
 class ComputerHandler:
@@ -86,57 +101,56 @@ class ComputerHandler:
             self.board[self.x_coord][self.y_coord] = 'O'
         return self.board
 
+
 def rungame():
     """
     This function will take the player through
     the introduction and explain the rules.
     """
-    computer_display_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
-    computer_hidden_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
-    player_board = [["~"] * BOARD_SIZE for i in range(BOARD_SIZE)]
     # Game Welcome
     print("---------------------------------------------------------")
     print("Welcome to Python Battleships")
     print("Beat the computer by finding it's ships before it sinks yours!")
     print("There are 3 ships in total, you will guess first!")
     print("---------------------------------------------------------\n")
+    Battleships(PLAYER_BOARD).user_plant_ships()
     # Prints User Board
-    UserBoard(player_board).print_current_board()
+    UserBoard(PLAYER_BOARD).print_current_board()
     # Plant ships on the computers hidden board
-    ComputerHandler(computer_hidden_board).plant_ships()
+    ComputerHandler(COMPUTER_HIDDEN_BOARD).plant_ships()
     # Prints the computer board to see where the ships have been placed
-    UserBoard(computer_hidden_board).print_current_board()
+    UserBoard(COMPUTER_HIDDEN_BOARD).print_current_board()
     # Sets the guess locally so it can be checked by the run game function
     player_hits = 0
     computer_hits = 0
     while player_hits < 3 and computer_hits < 3:
-        user_guess_col, user_guess_row = Battleships(computer_hidden_board).user_guess()
-        while computer_display_board[user_guess_row][user_guess_col] == "X":
+        user_col, user_row = Battleships(COMPUTER_HIDDEN_BOARD).user_input()
+        while COMPUTER_DISPLAY_BOARD[user_row][user_col] == "X":
             print("You have already guessed this area")
-            user_guess_col, user_guess_row = Battleships(computer_hidden_board).user_guess()
+            user_col, user_row = Battleships(COMPUTER_HIDDEN_BOARD).user_input()
         # Check if the users guess is where a ship is positioned
-        if computer_hidden_board[user_guess_row][user_guess_col] == "O":
+        if COMPUTER_HIDDEN_BOARD[user_row][user_col] == "O":
             player_hits += 1
             print("You hit a battleship!")
-            computer_display_board[user_guess_row][user_guess_col] = "#"
+            COMPUTER_DISPLAY_BOARD[user_row][user_col] = "#"
         else:
             print("You missed a battleship")
-            computer_display_board[user_guess_row][user_guess_col] = "X"
+            COMPUTER_DISPLAY_BOARD[user_row][user_col] = "X"
         
-        comp_guess_col, comp_guess_row = ComputerHandler(player_board).generate_guess()
-        while player_board[comp_guess_row][comp_guess_col] == "X":
-            comp_guess_col, comp_guess_row = ComputerHandler(player_board).generate_guess()
+        comp_guess_col, comp_guess_row = ComputerHandler(PLAYER_BOARD).generate_guess()
+        while PLAYER_BOARD[comp_guess_row][comp_guess_col] == "X":
+            comp_guess_col, comp_guess_row = ComputerHandler(PLAYER_BOARD).generate_guess()
         # Check computer guess against player board
-        if player_board[comp_guess_row][comp_guess_col] == "O":
+        if PLAYER_BOARD[comp_guess_row][comp_guess_col] == "O":
             computer_hits += 1
             print("Computer hit a battleship!")
-            player_board[comp_guess_row][comp_guess_col] = "#"
+            PLAYER_BOARD[comp_guess_row][comp_guess_col] = "#"
         else:
             print("Computer missed a battleship")
-            player_board[comp_guess_row][comp_guess_col] = "X"
+            PLAYER_BOARD[comp_guess_row][comp_guess_col] = "X"
         # Prints computer board to user after updating the users guess
-        UserBoard(computer_display_board).print_current_board()
-        UserBoard(player_board).print_current_board()
+        UserBoard(COMPUTER_DISPLAY_BOARD).print_current_board()
+        UserBoard(PLAYER_BOARD).print_current_board()
 
     print('end')
 
