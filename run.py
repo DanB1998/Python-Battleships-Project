@@ -74,9 +74,15 @@ class Battleships:
             print(f"\nShip {x+1} location?")
             ship_col, ship_row = Battleships(PLAYER_BOARD).user_input()
             while PLAYER_BOARD[ship_row][ship_col] == "O":
-                print("You have already chosen this area")
+                time.sleep(1)
+                print("\nYou have already chosen this area, try again")
                 ship_col, ship_row = Battleships(PLAYER_BOARD).user_input()
             PLAYER_BOARD[ship_row][ship_col] = "O"
+            print(f"""
+You planted a ship on {ship_col}, {ship_row}
+\nHere is a look at your board
+""")        
+            time.sleep(2)
             UserBoard(PLAYER_BOARD).print_current_board()
 
 
@@ -100,6 +106,8 @@ class ComputerHandler:
         """
         Plants ships randomly for the computer's board
         """
+        time.sleep(1)
+        print("\nThe computer has planted it's ships")
         for x in range(NUMBER_OF_SHIPS):
             self.x_coord, self.y_coord = random.randint(0, BOARD_SIZE-1), random.randint(0, BOARD_SIZE-1)
             while self.board[self.x_coord][self.y_coord] == 'O':
@@ -110,13 +118,11 @@ class ComputerHandler:
 
 def rungame():
     time.sleep(3)
-    Battleships(PLAYER_BOARD).user_plant_ships()
-    # Prints User Board
-    UserBoard(PLAYER_BOARD).print_current_board()
     # Plant ships on the computers hidden board
     ComputerHandler(COMPUTER_HIDDEN_BOARD).plant_ships()
-    # Prints the computer board to see where the ships have been placed
-    UserBoard(COMPUTER_HIDDEN_BOARD).print_current_board()
+    time.sleep(2)
+    print("Its time to play, you're guessing first. Choose a coordinate")
+    time.sleep(2)
     # Sets the guess locally so it can be checked by the run game function
     player_hits = 0
     computer_hits = 0

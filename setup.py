@@ -19,3 +19,6 @@ Would you like to read the instructions? Type 'Yes' or 'No'
         print("Instructions")
     elif start == ('no'):
         print("Get ready to play!")
+    else:
+        print("Invlaid response, restarting terminal")
+        setup()
