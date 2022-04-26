@@ -125,7 +125,7 @@ def rungame():
             computer_display_board[user_guess_row][user_guess_col] = "X"
         
         comp_guess_col, comp_guess_row = ComputerHandler(player_board).generate_guess()
-        while player_board[comp_guess_row][user_guess_col] == "X":
+        while player_board[comp_guess_row][comp_guess_col] == "X":
             comp_guess_col, comp_guess_row = ComputerHandler(player_board).generate_guess()
         # Check computer guess against player board
         if player_board[comp_guess_row][comp_guess_col] == "O":
