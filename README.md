@@ -113,6 +113,21 @@ Results from test cases:
 3. Pass - When inputting a previous guess the program notifies the user and asks them to try again.
 4. Pass - When inputting a string the program asks for an integer to be given, and asks the user to retry.
 
+### User Stories Testing
+<hr>
+
+* User's want to have a fun and interactive game to play.
+
+The game allows multiple inputs that are validated that can control the size and length of the game, the challenge against the computer and the guessing unknown tiles adds to the fun.
+
+* User's want the application to hand any areas to prevent a bad user experience.
+
+All inputs are validated and if they do not pass then the program will ask for a new input, to prevent any disruption in the user experience
+
+* User's want feedback and from the game so they can monitor game progress. They also want to know if they win or lose.
+
+The round end gives an update of the score and the current board that each player has. Also once one of the players hits all the ships the game will announce a winner.
+
 ### Validator testing
 <hr>
 

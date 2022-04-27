@@ -252,7 +252,6 @@ def start_game(player_board, computer_board):
             print("You sunk a battleship")
         else:
             print("You missed a battleship")
-        print("\nComputer will now guess...")
         col, row = player_board.computer_guess()
         while (col, row) in player_board.guesses:
             col, row = computer_board.computer_guess()
