@@ -4,10 +4,38 @@ In this project I will be building a battleship game in python, playable in the 
 
 The player will battle against a computer and will have to sink all of the computers ships before its sinks theirs.
 
+## User stories
+
+* User's want to have a fun and interactive game to play.
+
+* User's want the application to hand any areas to prevent a bad user experience.
+
+* User's want feedback and from the game so they can monitor game progress. They also want to know if they win or lose.
+
 ## Features
 <hr>
 
 A list of all of the features in this battleship terminal game, and an overview of what they are and do.
+
+### Starting Terminal
+<hr>
+The starting terminal is what the user will see when they land on the page. The first prompt for user input will ask for the user's name, which will  be stored in the player board instance of the class 'UserBoard' 
+
+
+### Computer board randomisation
+<hr>
+
+Computer board has randomly generated ships placed onto it. The board is hidden from the user as the ships positions are stored in the `ships` list instance in the UserBoard class.
+
+To prevent a ship being placed on top of another this code block executes and checks if the randomised coordinate has already been appended to the `ships` list.
+
+```
+col, row = random.randint(0, self.board_size-1), random.randint(0, self.board_size-1)
+while (col, row) in self.ships:
+    col, row = random.randint(0, self.board_size-1), random.randint(0, self.board_size-1)
+self.store_ships(col, row)
+```
+If the coordinates are already inside the `ships list` the while loop will identify this and repeat until it finds coordinates that are not inside of the `ships list`.
 
 ### Input validation
 <hr> 
