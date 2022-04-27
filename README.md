@@ -4,6 +4,8 @@ In this project I will be building a battleship game in python, playable in the 
 
 The player will battle against a computer and will have to sink all of the computers ships before its sinks theirs.
 
+![Project Battleships](/images/project-battleships.png)
+
 ## User stories
 
 * User's want to have a fun and interactive game to play.
@@ -21,6 +23,7 @@ A list of all of the features in this battleship terminal game, and an overview 
 <hr>
 The starting terminal is what the user will see when they land on the page. The first prompt for user input will ask for the user's name, which will  be stored in the player board instance of the class 'UserBoard' 
 
+![Welcome](/images/welcome.png)
 
 ### Computer board randomisation
 <hr>
@@ -83,7 +86,7 @@ The data model used is the UserBoard class. This class stores:
 
 Here is a look at the classes methods with collapsed functions.
 
-*INSERT SS OF CLASS*
+![UserBoard mathods](/images/userboard-methods.PNG)
 
 The methods allow the board to assign any relevant information to itself, and also append inputted/received guesses or ship positions for future reference. This made it easy to construct the start game function as a lot of the information is stored or easily obtained inside the UserBoard class.
 
@@ -99,7 +102,7 @@ The methods allow the board to assign any relevant information to itself, and al
 <hr>
 
 I tested the input validation by inputting many different incorrect data types.
-Test cases:
+Test cases I used for all inputs:
 
 1. Inputting nothing
 2. Inputting an integer that is outside of the boards range
@@ -112,6 +115,10 @@ Results from test cases:
 2. Pass - When inputting an integer that is outside the range, the program asks for a number inside the range.
 3. Pass - When inputting a previous guess the program notifies the user and asks them to try again.
 4. Pass - When inputting a string the program asks for an integer to be given, and asks the user to retry.
+
+Here is an example of how the program handles incorrect inputs:
+
+![Validation](/images/board-size-validation.png)
 
 ### User Stories Testing
 <hr>
