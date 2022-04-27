@@ -1,5 +1,4 @@
 import random
-import time
 
 
 class UserBoard:
@@ -60,7 +59,7 @@ class UserBoard:
 
     def user_guess(self):
         """
-        Will initiate the user guess
+        Will initiate the user guess and validate it
         """
         while True:
             try:
@@ -87,9 +86,11 @@ class UserBoard:
         """
         Plants randomly for the computer's board
         """
-        col, row = random.randint(0, self.board_size-1), random.randint(0, self.board_size-1)
+        col = random.randint(0, self.board_size-1)
+        row = random.randint(0, self.board_size-1)
         while (col, row) in self.ships:
-            col, row = random.randint(0, self.board_size-1), random.randint(0, self.board_size-1)
+            col = random.randint(0, self.board_size-1)
+            row = random.randint(0, self.board_size-1)
         self.store_ships(col, row)
 
     def computer_guess(self):
@@ -100,6 +101,44 @@ class UserBoard:
         comp_row = random.randint(0, self.board_size-1)
 
         return comp_col, comp_row
+
+
+def name_validation(value):
+    """
+    Will validate the setup inputs
+    """
+    if len(value) > 8 or len(value) < 4:
+        return True
+    else:
+        return False
+
+
+def board_validation(value):
+    """
+    Will validate the setup inputs
+    """
+    if value == 4:
+        return False
+    elif value == 5:
+        return False
+    elif value == 6:
+        return False
+    else:
+        return True
+
+
+def ship_validation(value):
+    """
+    Validates ship input
+    """
+    if value == 2:
+        return False
+    elif value == 3:
+        return False
+    elif value == 4:
+        return False
+    else:
+        return True
 
 
 def player_win():
@@ -119,18 +158,26 @@ def computer_win():
 
 
 def play_again():
-    pass
+    """
+    Play again function
+    """
+    print("""
+Thanks for playing, play again by clicking the run program button above
+""")
 
 
 def end_round(player_board, computer_board, hits, hits2):
     """
     Shows the game state after each guess by the computer and the player
     """
-    print("\nThats the end of this round\n")
+    print("\nThats the end of this round")
     print("Lets take a look at the boards\n")
     player_board.print_board()
     computer_board.print_board()
-    print(f"\n{player_board.name}'s score: {hits}, {computer_board.name}'s score: {hits2}")
+    print(f"""
+{player_board.name}'s score: {hits}, {computer_board.name}'s score: {hits2}
+Onto the next round. Good luck!
+""")
 
 
 def setup_game():
@@ -142,9 +189,34 @@ def setup_game():
 
     print("When entering a name, please ensure it is 4-8 characters long")
     name = input("Your name: ")
+    while name_validation(name):
+        print("Please ensure name is 4-8 characters long")
+        name = input("Your name: ")
 
-    board_size = int(input("Enter a board size, this must be between 4 and 6: "))
-    num_ships = int(input("Enter the amount of ships you want to play with: "))
+    print(f"\nWelcome {name}!")
+    while True:
+        try:
+            board_size = int(input("""
+Enter a board size, this must be between 4 and 6:
+"""))
+            if board_validation(board_size):
+                print("Number is outside of range")
+            else:
+                break
+        except ValueError:
+            print("Please enter a number")
+
+    while True:
+        try:
+            num_ships = int(input("""
+Enter amount of ships each, between 2 and 4:
+"""))
+            if ship_validation(num_ships):
+                print("Number is outside of range")
+            else:
+                break
+        except ValueError:
+            print("Please enter a number")
 
     player_board = UserBoard(board_size, num_ships, name)
     computer_board = UserBoard(board_size, num_ships, "Computer")
@@ -160,10 +232,10 @@ def start_game(player_board, computer_board):
     """
     Starts the game
     """
-    print("Here are the boards, good luck")
+    print("Here are the boards, good luck!")
     player_board.print_board()
     computer_board.print_board()
-    print("\nIts time to play, you're guessing first. Choose a coordinate\n")
+    print("\nIts time to play, you're guessing first. Choose a coordinate")
     player_hits = 0
     comp_hits = 0
     while player_hits < num_ships and comp_hits < num_ships:
@@ -175,15 +247,15 @@ def start_game(player_board, computer_board):
         print(f"\nYou guessed {col}, {row}")
         if check == "Hit":
             player_hits += 1
-            print("\nYou sunk a battleship")
+            print("You sunk a battleship")
         else:
             print("You missed a battleship")
         print("\nComputer will now guess...")
         col, row = player_board.computer_guess()
         while (col, row) in player_board.guesses:
-            col, row = computer_board.user_guess()
+            col, row = computer_board.computer_guess()
         check = player_board.guess(col, row)
-        print(f"\nComputer guessed {col}, {row}")
+        print(f"Computer guessed {col}, {row}")
         if check == "Hit":
             comp_hits += 1
             print("Computer sunk a battleship")
