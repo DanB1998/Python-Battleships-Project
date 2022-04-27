@@ -14,6 +14,13 @@ The player will battle against a computer and will have to sink all of the compu
 
 * User's want feedback and from the game so they can monitor game progress. They also want to know if they win or lose.
 
+## Flow Diagram
+<hr>
+
+![Flow diagram](/images/flow-diagram.png)
+
+A simple flow diagram that was the first thing I drafted before starting the project. This helped me visualise the logic that the `start_game` function was going to need. It also helped me understand which variables I would need to store in the UserBoard class, from the inputs at the start.
+
 ## Features
 <hr>
 
@@ -73,6 +80,46 @@ In this `Try and Except` statement the `Try` will execute until the input is an 
 
 Only when both of these instances conclude that the input is valid the loop will then break and do the same for the other coordinate. Once both are validated the row and column values will be returned.
 
+### The Main Game Loop
+<hr>
+
+```
+while player_hits < num_ships and comp_hits < num_ships:
+    col, row = computer_board.user_guess()
+    while (col, row) in computer_board.guesses:
+        print("You've already guessed here! Try again")
+        col, row = computer_board.user_guess()
+    check = computer_board.guess(col, row)
+    print(f"\nYou guessed {col}, {row}")
+    if check == "Hit":
+        player_hits += 1
+        print("You sunk a battleship")
+    else:
+        print("You missed a battleship")
+    col, row = player_board.computer_guess()
+    while (col, row) in player_board.guesses:
+        col, row = computer_board.computer_guess()
+    check = player_board.guess(col, row)
+    print(f"Computer guessed {col}, {row}")
+    if check == "Hit":
+        comp_hits += 1
+        print("Computer sunk a battleship")
+    else:
+        print("Computer missed a battleship")
+    end_round(player_board, computer_board, player_hits, comp_hits)
+```
+
+This is the main loop that controlled the flow of the game. It keeps looping over the user guesses and ending the round until the player or the computer hits becomes equal to the total number of ships.
+
+I made `num_ships` global so that the start game function could access this variable in order to make the decision on when the game was over.
+
+### Win and Lose
+<hr>
+
+Once the amount of hits for the player or the computer becomes equal to the total number of ships. The while loop becomes false, therefore endingf the loop and running the `computer_win()` or `player_win()` functions.
+
+![Win game](/images/win-game.png)
+
 ### The Data Model
 <hr>
 
@@ -86,7 +133,7 @@ The data model used is the UserBoard class. This class stores:
 
 Here is a look at the classes methods with collapsed functions.
 
-![UserBoard mathods](/images/userboard-methods.PNG)
+![UserBoard methods](/images/userboard-methods.png)
 
 The methods allow the board to assign any relevant information to itself, and also append inputted/received guesses or ship positions for future reference. This made it easy to construct the start game function as a lot of the information is stored or easily obtained inside the UserBoard class.
 
@@ -94,6 +141,8 @@ The methods allow the board to assign any relevant information to itself, and al
 <hr>
 
 * Ability to choose size and orientation of ships
+* Ability for user to place ships
+* Ability to play 2 player
 
 ## Testing
 <hr>
@@ -119,6 +168,15 @@ Results from test cases:
 Here is an example of how the program handles incorrect inputs:
 
 ![Validation](/images/board-size-validation.png)
+
+### Guesses Testing
+<hr>
+
+By calling `player_board.guesses` in the start game function, I was able to test the computers guesses to check if they were functioning normally.
+
+![Computer guesses](/images/computer-guesses.png)
+
+The result above shows that the computers guesses are unique and random (I ran this many times and did not get duplicates). This proves that the code behind the computers guesses is functioning and is robust.
 
 ### User Stories Testing
 <hr>
@@ -166,6 +224,10 @@ I solved this bug by running the program a few times whilst printing the ships l
 `print(computer_board.ships)` 
 
 After doing this I realised that some of the ships were positioned outside of the board size (you could also guess 1 too far as this issue was global). The problem was an indexing problem, and once I changed `board_size` to `board_size-1` globally I had no further issues.
+
+Bug #2:
+
+No further bugs found during testing
 
 ## Credits
 <hr>
