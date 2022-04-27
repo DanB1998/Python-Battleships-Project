@@ -130,6 +130,21 @@ Here are the steps to deploying this way.
 5. Run command `heroku git:remote -a python-battleships-game`
 6. Push changes using `git push heroku main`
 
+
+## Solved Bugs
+<hr>
+
+Bug  #1:
+
+Computer was generating ships outside of the board range and I could not understand why I could not find all of the ships.
+
+Bug #1 solved: 
+I solved this bug by running the program a few times whilst printing the ships list     belonging to the board.
+
+`print(computer_board.ships)` 
+
+After doing this I realised that some of the ships were positioned outside of the board size (you could also guess 1 too far as this issue was global). The problem was an indexing problem, and once I changed `board_size` to `board_size-1` globally I had no further issues.
+
 ## Credits
 <hr>
 
