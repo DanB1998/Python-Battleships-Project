@@ -95,6 +95,24 @@ The methods allow the board to assign any relevant information to itself, and al
 ## Testing
 <hr>
 
+### Manual testing
+<hr>
+
+I tested the input validation by inputting many different incorrect data types.
+Test cases:
+
+1. Inputting nothing
+2. Inputting an integer that is outside of the boards range
+3. Inputting a coordinate I have already guessed
+4. Inputting a string
+
+Results from test cases:
+
+1. Pass - when inputting nothing the program asks for a number to be given, and asks the user to retry.
+2. Pass - When inputting an integer that is outside the range, the program asks for a number inside the range.
+3. Pass - When inputting a previous guess the program notifies the user and asks them to try again.
+4. Pass - When inputting a string the program asks for an integer to be given, and asks the user to retry.
+
 ### Validator testing
 <hr>
 
