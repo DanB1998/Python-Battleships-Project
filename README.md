@@ -110,9 +110,26 @@ Here are the steps to deploying this way.
 3. Head to the console of the repository in gitpod.
 4. login to heroku through the console using `heroku login -i`
 5. Run command `heroku git:remote -a python-battleships-game`
-6. Push changes using `git push heroku
+6. Push changes using `git push heroku main`
 
 ## Credits
 <hr>
 
-- Code institute for the template to allow the mock terminal.
+- [Code institute](https://codeinstitute.net/) for the template to allow the mock terminal.
+
+- [Code institute](https://codeinstitute.net/) for the Data model and structure of the Class. Referenced below:
+
+```
+class UserBoard:
+    """
+    Will allow boards to be printed using the
+    print_current_board method
+    """
+    def __init__(self, board_size, num_ships, name):
+        self.board = [["~"] * board_size for i in range(board_size)]
+        self.board_size = board_size
+        self.num_ships = num_ships
+        self.name = name
+        self.guesses = []
+        self.ships = []
+```
