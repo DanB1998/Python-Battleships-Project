@@ -59,7 +59,7 @@ class UserBoard:
         """
         while True:
             try:
-                user_col = int(input("\nSelect column: "))
+                user_col = int(input("\nGuess a column: "))
                 if user_col < 0 or user_col > self.board_size-1:
                     print("Number is outside of range")
                 else:
@@ -69,7 +69,7 @@ class UserBoard:
 
         while True:
             try:
-                user_row = int(input("Select row: "))
+                user_row = int(input("Guess a row: "))
                 if user_row < 0 or user_row > self.board_size-1:
                     print("Number is outside of range")
                 else:
@@ -104,7 +104,7 @@ def player_win():
     pass
 
 
-def comp_win():
+def computer_win():
     """
     Code runs when the computer wins
     """
@@ -164,16 +164,18 @@ def start_game(player_board, computer_board):
             print("You've already guessed here! Try again")
             col, row = computer_board.user_guess()
         check = computer_board.guess(col, row)
+        print(f"\nYou guessed {col}, {row}")
         if check == "Hit":
             player_hits += 1
-            print("You sunk a battleship")
+            print("\nYou sunk a battleship")
         else:
             print("You missed a battleship")
-        print("Computer will now guess...")
+        print("\nComputer will now guess...")
         col, row = player_board.computer_guess()
         while (col, row) in player_board.guesses:
             col, row = computer_board.user_guess()
         check = player_board.guess(col, row)
+        print(f"\nComputer guessed {col}, {row}")
         if check == "Hit":
             comp_hits += 1
             print("Computer sunk a battleship")
@@ -184,6 +186,7 @@ def start_game(player_board, computer_board):
         player_win()
     else:
         computer_win()
+
 
 if __name__ == '__main__':
     # setup_terminal()
