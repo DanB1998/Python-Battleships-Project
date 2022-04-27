@@ -34,7 +34,12 @@ class UserBoard:
         Prints the current board passed to it
         """
         print(f"\n{self.name}'s Board ")
-        print("   0 1 2 3 4")
+        if board_size == 4:
+            print("   0 1 2 3")
+        elif board_size == 5:
+            print("   0 1 2 3 4")
+        else:
+            print("   0 1 2 3 4 5")
         row_no = 0
         for row in self.board:
             print(row_no, "|" + "|".join(row) + "|")
@@ -101,14 +106,31 @@ def player_win():
     """
     Code runs when the player wins
     """
-    pass
+    print("Congratulations, You won against the computer")
+    play_again()
 
 
 def computer_win():
     """
     Code runs when the computer wins
     """
+    print("Unfortunately, You lost against the computer")
+    play_again()
+
+
+def play_again():
     pass
+
+
+def end_round(player_board, computer_board, hits, hits2):
+    """
+    Shows the game state after each guess by the computer and the player
+    """
+    print("\nThats the end of this round\n")
+    print("Lets take a look at the boards\n")
+    player_board.print_board()
+    computer_board.print_board()
+    print(f"\n{player_board.name}'s score: {hits}, {computer_board.name}'s score: {hits2}")
 
 
 def setup_game():
@@ -116,10 +138,13 @@ def setup_game():
     Sets up the game to play
     """
     global num_ships
+    global board_size
 
-    board_size = 5
-    num_ships = 3
-    name = "Susan"
+    print("When entering a name, please ensure it is 4-8 characters long")
+    name = input("Your name: ")
+
+    board_size = int(input("Enter a board size, this must be between 4 and 6: "))
+    num_ships = int(input("Enter the amount of ships you want to play with: "))
 
     player_board = UserBoard(board_size, num_ships, name)
     computer_board = UserBoard(board_size, num_ships, "Computer")
@@ -129,21 +154,6 @@ def setup_game():
         player_board.plant_ships()
 
     start_game(player_board, computer_board)
-
-
-def end_round(player_board, computer_board, hits, hits2):
-    print("\nThats the end of this round\n")
-    print("Lets take a look at the boards\n")
-    player_board.print_board()
-    computer_board.print_board()
-    print(f"\n{player_board.name}'s score: {hits}, {computer_board.name}'s score: {hits2}")
-    time.sleep(5)
-    print("\nNext round beginning in \n3")
-    time.sleep(1)
-    print("2")
-    time.sleep(1)
-    print("1")
-    time.sleep(1)
 
 
 def start_game(player_board, computer_board):
@@ -156,8 +166,6 @@ def start_game(player_board, computer_board):
     print("\nIts time to play, you're guessing first. Choose a coordinate\n")
     player_hits = 0
     comp_hits = 0
-    print(player_board.ships)
-    print(computer_board.ships)
     while player_hits < num_ships and comp_hits < num_ships:
         col, row = computer_board.user_guess()
         while (col, row) in computer_board.guesses:
@@ -182,10 +190,12 @@ def start_game(player_board, computer_board):
         else:
             print("Computer missed a battleship")
         end_round(player_board, computer_board, player_hits, comp_hits)
-    if player_hits == 3:
-        player_win()
-    else:
-        computer_win()
+        if player_hits == num_ships:
+            player_win()
+        elif comp_hits == num_ships:
+            computer_win()
+        else:
+            continue
 
 
 if __name__ == '__main__':
