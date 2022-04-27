@@ -245,12 +245,15 @@ def start_game(player_board, computer_board):
     Starts the game
     """
     print("Here are the boards, good luck!")
+    # Print the boards
     player_board.print_board()
     computer_board.print_board()
     print("\nIts time to play, you're guessing first. Choose a coordinate")
+    # Create hits variables to be able to track a win or loss
     player_hits = 0
     comp_hits = 0
     while player_hits < num_ships and comp_hits < num_ships:
+        # Users guess
         col, row = computer_board.user_guess()
         while (col, row) in computer_board.guesses:
             print("You've already guessed here! Try again")
@@ -262,25 +265,25 @@ def start_game(player_board, computer_board):
             print("You sunk a battleship")
         else:
             print("You missed a battleship")
+        # Computers guess
         col, row = player_board.computer_guess()
         while (col, row) in player_board.guesses:
             col, row = computer_board.computer_guess()
         check = player_board.guess(col, row)
         print(f"Computer guessed {col}, {row}")
+        # Checking for a hit
         if check == "Hit":
             comp_hits += 1
             print("Computer sunk a battleship")
         else:
             print("Computer missed a battleship")
+        # Ending the round
         end_round(player_board, computer_board, player_hits, comp_hits)
-        if player_hits == num_ships:
-            player_win()
-        elif comp_hits == num_ships:
-            computer_win()
-        else:
-            continue
+    if player_hits == num_ships:
+        player_win()
+    elif comp_hits == num_ships:
+        computer_win()
 
 
 if __name__ == '__main__':
-    # setup_terminal()
     setup_game()

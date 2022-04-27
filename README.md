@@ -165,9 +165,15 @@ Results from test cases:
 3. Pass - When inputting a previous guess the program notifies the user and asks them to try again.
 4. Pass - When inputting a string the program asks for an integer to be given, and asks the user to retry.
 
-Here is an example of how the program handles incorrect inputs:
+Here are examples of how the program handles incorrect inputs:
 
 ![Validation](/images/board-size-validation.png)
+
+![Validation](/images/name-validation.png)
+
+![Validation](/images/guess_validation.png)
+
+![Validation](/images/guess_validation2.png)
 
 ### Guesses Testing
 <hr>
@@ -225,9 +231,17 @@ I solved this bug by running the program a few times whilst printing the ships l
 
 After doing this I realised that some of the ships were positioned outside of the board size (you could also guess 1 too far as this issue was global). The problem was an indexing problem, and once I changed `board_size` to `board_size-1` globally I had no further issues.
 
-Bug #2:
-
 No further bugs found during testing
+
+## Technologies used
+
+* Python - To create the game in an object oriented fashion.
+
+* Git - As version control.
+
+* Gitpod - As my coding platform.
+
+* Heroku - To deploy my application with backend features.
 
 ## Credits
 <hr>
