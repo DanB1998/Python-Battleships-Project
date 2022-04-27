@@ -146,6 +146,7 @@ def player_win():
     """
     Code runs when the player wins
     """
+    print("Oh wait... you've sank all of their ships!")
     print("Congratulations, You won against the computer")
     play_again()
 
@@ -154,6 +155,7 @@ def computer_win():
     """
     Code runs when the computer wins
     """
+    print("Oh wait... your ships are gone")
     print("Unfortunately, You lost against the computer")
     play_again()
 
@@ -189,7 +191,17 @@ def setup_game():
     global num_ships
     global board_size
 
-    print("When entering a name, please ensure it is 4-8 characters long")
+    print("""
+______________________________________________________________
+WELCOME TO THE PYTHON BATTLESHIPS TERMINAL GAME
+SINK THE COMPUTERS SHIPS BEFORE IT SINKS YOURS
+\nINPUT IS COLUMN FIRST THEN ROW
+TOP LEFT COORDINATE IS (0,0)
+\nRUNNING SETUP.... PLEASE FOLLOW THE PROMPT
+______________________________________________________________
+""")
+
+    print("Enter a name, please ensure it is 4-8 characters long")
     name = input("Your name: ")
     while name_validation(name):
         print("Please ensure name is 4-8 characters long")
