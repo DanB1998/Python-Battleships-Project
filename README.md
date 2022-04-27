@@ -26,6 +26,14 @@ A simple flow diagram that was the first thing I drafted before starting the pro
 
 A list of all of the features in this battleship terminal game, and an overview of what they are and do.
 
+
+### Doc Strings and Comments
+<hr>
+
+I used doc strings for nearly all of my functions and methods so anybody looking at this project can understand what each thing does.
+
+Also comments are used to explain the flow in the `start_game` function.
+
 ### Starting Terminal
 <hr>
 The starting terminal is what the user will see when they land on the page. The first prompt for user input will ask for the user's name, which will  be stored in the player board instance of the class 'UserBoard' 
@@ -240,6 +248,8 @@ No further bugs found during testing
 * Git - As version control.
 
 * Gitpod - As my coding platform.
+
+* Github - To host and store my project remotely.
 
 * Heroku - To deploy my application with backend features.
 
