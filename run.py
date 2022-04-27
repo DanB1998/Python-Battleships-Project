@@ -1,4 +1,5 @@
 import random
+import time
 
 
 class UserBoard:
@@ -178,6 +179,7 @@ def end_round(player_board, computer_board, hits, hits2):
 {player_board.name}'s score: {hits}, {computer_board.name}'s score: {hits2}
 Onto the next round. Good luck!
 """)
+    time.sleep(4)
 
 
 def setup_game():
